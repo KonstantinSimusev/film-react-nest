@@ -1,4 +1,5 @@
 import { IFilm } from '../films/entities/films.entity';
+import mongoJson from '../../test/mongodb_initial_stub.json';
 
 // Создаем класс репозитория
 export class FilmRepository {
@@ -11,8 +12,7 @@ export class FilmRepository {
 
   private async loadInitialData(): Promise<void> {
     try {
-      const data = require('../../test/mongodb_initial_stub.json');
-      this.films = data;
+      this.films = mongoJson;
     } catch (error) {
       console.error('Ошибка при загрузке начальных данных:', error);
     }
