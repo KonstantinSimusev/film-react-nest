@@ -6,8 +6,12 @@ import {
   IsNotEmpty,
   Min,
   Max,
+  IsEmail,
+  IsArray,
+  ValidateNested,
   ValidationOptions,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 // Создаем общий объект с опциями валидации для сообщений
 const commonOptions: ValidationOptions = {
@@ -42,4 +46,19 @@ export class TicketDTO {
   @IsNumber({}, { message: 'Цена должна быть числом' })
   @IsPositive({ message: 'Цена должна быть положительным числом' })
   price: number;
+}
+
+export class CreateOrderDTO {
+  @IsEmail({}, { message: 'Некорректный email' })
+  @IsNotEmpty(commonOptions)
+  email: string;
+
+  @IsNotEmpty(commonOptions)
+  phone: string;
+
+  @IsArray({ message: 'Билеты должны быть массивом' })
+  @IsNotEmpty({ message: 'Список билетов не может быть пустым' })
+  @Type(() => TicketDTO)
+  @ValidateNested({ each: true })
+  tickets: TicketDTO[];
 }

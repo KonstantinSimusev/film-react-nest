@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { IFilm } from './entities/films.entity';
+import { Film } from './entities/film.entity';
 
 @Injectable()
 export class FilmRepository {
-  constructor(@InjectModel('Film') private readonly filmModel: Model<IFilm>) {}
+  constructor(@InjectModel('Film') private readonly filmModel: Model<Film>) {}
 
-  async getAllFilms(): Promise<IFilm[]> {
+  async getAllFilms(): Promise<Film[]> {
     const films = await this.filmModel.find().lean();
 
     return films.map((film) => ({
@@ -18,7 +18,7 @@ export class FilmRepository {
     }));
   }
 
-  async getFilmById(id: string): Promise<IFilm | null> {
+  async getFilmById(id: string): Promise<Film | null> {
     const film = await this.filmModel.findById(id);
     return film;
   }

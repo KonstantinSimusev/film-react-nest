@@ -1,10 +1,10 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
-import { IFilm } from './entities/films.entity';
-import { ISсhedule } from './entities/sсhedule.entity';
+import { IFilm } from '../../shared/interfaces/entities/films.entity';
+import { ISсhedule } from '../../shared/interfaces/entities/sсhedule.entity';
 import { FilmsService } from './films.service';
 
-import { ApiListResponse } from '../utils/api-list-response';
+import { ApiListResponse } from '../../shared/interfaces/api/api-list-response.interface';
 
 @Controller('films')
 export class FilmsController {

@@ -1,19 +1,20 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 
-import { OrderRepository } from './order.repository';
+import { ITicket } from '../../shared/interfaces/entities/ticket.entity';
 import { CreateOrderDTO } from './dto/create-order.dto';
-import { ITicket } from './entities/ticket.entity';
 
-import { ApiListResponse } from 'src/utils/api-list-response';
+import { OrderRepository } from './order.repository';
+
+import { ApiListResponse } from 'src/shared/interfaces/api/api-list-response.interface';
 
 @Injectable()
 export class OrderService {
   constructor(private orderRepository: OrderRepository) {}
 
   async createOrder(
-    orderData: CreateOrderDTO,
+    createOrderDTO: CreateOrderDTO,
   ): Promise<ApiListResponse<ITicket>> {
-    const { tickets } = orderData;
+    const { tickets } = createOrderDTO;
     const items: ITicket[] = [];
     const busyAllSeats = new Set<string>(); // Создаем set для хранения занятых мест
     const currentBusySeats: string[] = []; // Массив для хранения всех занятых мест

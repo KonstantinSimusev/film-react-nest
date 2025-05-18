@@ -1,5 +1,5 @@
-import { IFilm } from '../films/entities/films.entity';
-import mongoJson from '../../test/mongodb_initial_stub.json';
+import { IFilm } from '../../shared/interfaces/entities/films.entity';
+import mongoJson from '../../../test/mongodb_initial_stub.json';
 
 // Создаем класс репозитория
 export class FilmRepository {

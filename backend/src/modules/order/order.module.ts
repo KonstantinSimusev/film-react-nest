@@ -5,7 +5,7 @@ import { OrderRepository } from './order.repository';
 import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
 
-import { OrderSchema } from './schemas/order.schema';
+import { OrderSchema } from './entities/ticket.entity';
 
 @Module({
   imports: [
