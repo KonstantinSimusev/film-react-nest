@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "role_afisha_admin",
+  "password": "role_afisha_admin",
+  "database": "afisha_db",
+  "synchronize": true,
+  "logging": true,
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "migrations": ["dist/migrations/*{.ts,.js}"],
+  "subscribers": ["dist/subscribers/*{.ts,.js}"]
+}

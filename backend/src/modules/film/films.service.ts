@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { FilmRepository } from './films.repository';
-import { IFilm } from './entities/films.entity';
-import { ISсhedule } from './entities/sсhedule.entity';
+import { IFilm } from '../../shared/interfaces/entities/films.entity';
+import { ISсhedule } from '../../shared/interfaces/entities/sсhedule.entity';
 
-import { ApiListResponse } from '../utils/api-list-response';
+import { FilmRepository } from './films.repository';
+
+import { ApiListResponse } from '../../shared/interfaces/api/api-list-response.interface';
 
 @Injectable()
 export class FilmsService {
