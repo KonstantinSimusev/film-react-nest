@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Ticket } from './entities/ticket.entity';
 
 @Injectable()
 export class OrderRepository {
-  constructor(@InjectModel('Order') private orderModel: Model<Ticket>) {}
+  constructor(
+    @InjectRepository(Ticket)
+    private readonly ticketRepository: Repository<Ticket>,
+  ) {}
 
   async getAllOrders(): Promise<Ticket[]> {
-    const orders = await this.orderModel.find().lean();
-    return orders;
+    return await this.ticketRepository.find();
   }
 
   async createOrder(order: Ticket): Promise<Ticket> {
-    const newOrder = new this.orderModel(order);
-
-    return newOrder.save();
+    return await this.ticketRepository.save(order);
   }
 }

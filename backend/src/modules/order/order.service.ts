@@ -5,7 +5,8 @@ import { CreateOrderDTO } from './dto/create-order.dto';
 
 import { OrderRepository } from './order.repository';
 
-import { ApiListResponse } from 'src/shared/interfaces/api/api-list-response.interface';
+import { ApiListResponse } from '../../shared/interfaces/api/api-list-response.interface';
+import { Ticket } from './entities/ticket.entity';
 
 @Injectable()
 export class OrderService {
@@ -33,9 +34,20 @@ export class OrderService {
       if (busyAllSeats.has(currentSeat)) {
         currentBusySeats.push(currentSeat);
       } else {
+        // Создаем новый объект Ticket из DTO
+        const newTicket = new Ticket();
+        newTicket.film = ticket.film;
+        newTicket.session = ticket.session;
+        newTicket.daytime = ticket.daytime;
+        newTicket.row = ticket.row;
+        newTicket.seat = ticket.seat;
+        newTicket.price = ticket.price;
+        newTicket.schedule = ticket.schedule;
+
         // Если место свободно, создаем заказ
-        const newOrder = await this.orderRepository.createOrder(ticket);
+        const newOrder = await this.orderRepository.createOrder(newTicket);
         items.push(newOrder);
+        
         // Добавляем занятое место в set
         busyAllSeats.add(currentSeat);
       }

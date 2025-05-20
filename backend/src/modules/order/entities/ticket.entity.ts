@@ -1,24 +1,35 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 
-@Schema()
+import { Schedule } from '../../film/entities/schedule.entity';
+
+@Entity()
 export class Ticket {
-  @Prop({ type: String, required: true })
+  @PrimaryColumn({
+    type: 'uuid',
+    nullable: false,
+    default: () => 'uuid_generate_v4()',
+  })
+  id: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
   film: string;
 
-  @Prop({ type: String, required: true })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   session: string;
 
-  @Prop({ type: String, required: true })
+  @Column({ type: 'timestamp with time zone', nullable: false })
   daytime: string;
 
-  @Prop({ type: Number, required: true })
+  @Column({ type: 'integer', nullable: false })
   row: number;
 
-  @Prop({ type: Number, required: true })
+  @Column({ type: 'integer', nullable: false })
   seat: number;
 
-  @Prop({ type: Number, required: true })
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   price: number;
-}
 
-export const OrderSchema = SchemaFactory.createForClass(Ticket);
+  @ManyToOne(() => Schedule, (schedule) => schedule.tickets)
+  @JoinColumn({ name: 'session_id' })
+  schedule: Schedule;
+}
