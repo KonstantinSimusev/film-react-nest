@@ -1,7 +1,9 @@
-import { Entity, PrimaryColumn, Column, OneToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
 import { Schedule } from './schedule.entity';
 
-@Entity()
+@Entity({
+  name: 'films',
+})
 export class Film {
   @PrimaryColumn({ type: 'uuid', nullable: false })
   id: string;
@@ -30,7 +32,11 @@ export class Film {
   @Column({ type: 'text', nullable: false })
   description: string;
 
-  @OneToMany(() => Schedule, (schedule) => schedule.film)
-  @JoinTable()
-  schedule: Schedule[];
+  @OneToMany(() => Schedule, (schedule) => schedule.film, {
+    eager: true,
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  })
+  schedule?: Schedule[];
 }

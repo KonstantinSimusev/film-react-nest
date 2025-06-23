@@ -1,13 +1,22 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Film } from './film.entity';
 import { Ticket } from '../../order/entities/ticket.entity';
 
-@Entity()
+@Entity({
+  name: 'schedules',
+})
 export class Schedule {
   @PrimaryColumn({ type: 'uuid', nullable: false })
   id: string;
 
-  @Column({ type: 'timestamp with time zone', nullable: false })
+  @Column({ type: 'varchar', nullable: false })
   daytime: string;
 
   @Column({ type: 'integer', nullable: false })
@@ -26,8 +35,7 @@ export class Schedule {
   taken: string[];
 
   @ManyToOne(() => Film, (film) => film.schedule)
-  @JoinColumn({ name: 'film_id' })
-  film: Film;
+  film?: Film;
 
   @OneToMany(() => Ticket, (ticket) => ticket.schedule)
   tickets: Ticket[];

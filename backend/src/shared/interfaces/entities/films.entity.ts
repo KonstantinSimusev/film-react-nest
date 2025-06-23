@@ -10,5 +10,5 @@ export interface IFilm {
   title: string;
   about: string;
   description: string;
-  schedule: ISсhedule[];
+  schedule?: ISсhedule[];
 }
