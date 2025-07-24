@@ -11,16 +11,13 @@ describe('FilmsController', () => {
       controllers: [FilmsController],
       providers: [FilmsService],
     })
-      .useMocker((token) => {
-        if (token === 'REPOSITORY') {
-          return {
-            films: {
-              getAllFilms: jest.fn().mockResolvedValue(fixtures.films),
-              getFilmSchedule: jest.fn().mockResolvedValue(fixtures.film),
-            },
-          };
-        }
-        throw new Error(`Token ${token.toString()} not found!`);
+      .useMocker(() => {
+        return {
+          films: {
+            findAll: jest.fn().mockResolvedValue(fixtures.films),
+            findSchedule: jest.fn().mockResolvedValue(fixtures.film),
+          },
+        };
       })
       .compile();
 
@@ -29,13 +26,13 @@ describe('FilmsController', () => {
 
   it('should find all films', async () => {
     expect(controller).toBeDefined();
-    const findResult = await controller.getAllFilms();
+    const findResult = await controller.findAll();
     expect(findResult).toEqual(fixtures.films);
   });
 
   it('should find one schedule', async () => {
     expect(controller).toBeDefined();
-    const findResult = await controller.getFilmSchedule('11');
+    const findResult = await controller.findSchedule('11');
     expect(findResult).toEqual({
       total: fixtures.film.schedule.length,
       items: fixtures.film.schedule,

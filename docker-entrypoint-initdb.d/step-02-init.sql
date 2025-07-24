@@ -7,12 +7,11 @@
 -- Dumped from database version 16.9 (Homebrew)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2025-06-17 18:17:35 +05
+-- Started on 2025-07-06 12:42:19 +05
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -23,16 +22,16 @@ SET row_security = off;
 
 --
 -- TOC entry 6 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: admin
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
 -- *not* creating schema, since initdb creates it
 
 
-ALTER SCHEMA public OWNER TO admin;
+ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 2 (class 3079 OID 24583)
+-- TOC entry 2 (class 3079 OID 24733)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -40,7 +39,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
--- TOC entry 3736 (class 0 OID 0)
+-- TOC entry 3712 (class 0 OID 0)
 -- Dependencies: 2
 -- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
 --
@@ -53,8 +52,8 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 216 (class 1259 OID 24594)
--- Name: films; Type: TABLE; Schema: public; Owner: admin
+-- TOC entry 216 (class 1259 OID 24744)
+-- Name: films; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.films (
@@ -69,11 +68,12 @@ CREATE TABLE public.films (
     description character varying NOT NULL
 );
 
-ALTER TABLE public.films OWNER TO admin;
+
+ALTER TABLE public.films OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 24602)
--- Name: schedules; Type: TABLE; Schema: public; Owner: admin
+-- TOC entry 217 (class 1259 OID 24752)
+-- Name: schedules; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.schedules (
@@ -88,50 +88,30 @@ CREATE TABLE public.schedules (
 );
 
 
-ALTER TABLE public.schedules OWNER TO admin;
+ALTER TABLE public.schedules OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 24615)
--- Name: ticket; Type: TABLE; Schema: public; Owner: admin
---
-
-CREATE TABLE public.ticket (
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    film character varying(255) NOT NULL,
-    session character varying(255) NOT NULL,
-    daytime timestamp with time zone NOT NULL,
-    "row" integer NOT NULL,
-    seat integer NOT NULL,
-    price numeric(10,2) NOT NULL,
-    session_id uuid
-);
-
-
-ALTER TABLE public.ticket OWNER TO admin;
-
---
--- TOC entry 3726 (class 0 OID 24594)
+-- TOC entry 3705 (class 0 OID 24744)
 -- Dependencies: 216
--- Data for Name: films; Type: TABLE DATA; Schema: public; Owner: admin
+-- Data for Name: films; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('92b8a2a7-ab6b-4fa9-915b-d27945865e39', 8.1, 'Амелия Хьюз', 'Рекомендуемые', '/bg6s.jpg', '/bg6c.jpg', 'Сон в летний день', 'Фэнтези-фильм о группе друзей попавших в волшебный лес, где время остановилось.', 'Причудливый фэнтези-фильм, действие которого происходит в волшебном лесу, где время остановилось. Группа друзей натыкается на это заколдованное царство и поначалу проникается беззаботным духом обитателей, но потом друзьям приходится разойтись. А как встретиться снова, если нет ни времени, ни места встречи?');
+INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('92b8a2a7-ab6b-4fa9-915b-d27945865e39', 8.1, 'Амелия Хьюз', '["Рекомендуемые"]', '/bg6s.jpg', '/bg6c.jpg', 'Сон в летний день', 'Фэнтези-фильм о группе друзей попавших в волшебный лес, где время остановилось.', 'Причудливый фэнтези-фильм, действие которого происходит в волшебном лесу, где время остановилось. Группа друзей натыкается на это заколдованное царство и поначалу проникается беззаботным духом обитателей, но потом друзьям приходится разойтись. А как встретиться снова, если нет ни времени, ни места встречи?');
 INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('0354a762-8928-427f-81d7-1656f717f39c', 9.5, 'Оливер Беннет', 'Рекомендуемые', '/bg4s.jpg', '/bg4c.jpg', 'Парадокс Нексуса', 'Фильм об эксперименте по соединению человеческих умов. Исследует вопросы неприкосновенности частной жизни, идентичности и самой природы человеческого сознания', 'В фильме исследуются последствия новаторского эксперимента по соединению человеческих умов. По мере развития проекта участники сталкиваются с вопросами неприкосновенности частной жизни, идентичности и самой природы человеческого сознания.');
 INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('5b70cb1a-61c9-47b1-b207-31f9e89087ff', 8.9, 'Лила Васкес', 'Рекомендуемые', '/bg2s.jpg', '/bg2c.jpg', 'Стражи Гримуара', 'Фэнтезийное приключение об истинном значении дружбы, мужества и силы знаний', 'Захватывающее фэнтезийное приключение, которое рассказывает о группе героев, которые должны защитить древний магический том от попадания в руки тёмного колдуна. История об истинном значении дружбы, мужества и силы знаний.');
 INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('3bedbc5a-844b-40eb-9d77-83b104e0cf75', 8.5, 'Элиза Уиттакер', 'Рекомендуемые', '/bg5s.jpg', '/bg5c.jpg', 'Звёздное путешествие', 'Научно-фантастический фильм о команде астронавтов, исследующий темы жизнестойкости, надежды и силы человеческих связей', '«Звёздное путешествие» — прекрасный научно-фантастический фильм о команде астронавтов, путешествующих по галактике в поисках нового дома для человечества. Помимо потрясающей работы оператора и специалистов по визуальным эффектам, можно отметить темы, исследуемые в фильме: жизнестойкости, надежды и силы человеческих связей.');
 INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('51b4bc85-646d-47fc-b988-3e7051a9fe9e', 9, 'Харрисон Рид', 'Рекомендуемые', '/bg3s.jpg', '/bg3c.jpg', 'Недостижимая утопия', 'Провокационный фильм-антиутопия, исследующий темы свободы, контроля и цены совершенства.', 'Провокационный фильм-антиутопия режиссера Харрисона Рида. Действие фильма разворачивается в, казалось бы, идеальном обществе, и рассказывает о группе граждан, которые начинают подвергать сомнению систему. Фильм исследует темы свободы, контроля и цены совершенства.');
 INSERT INTO public.films (id, rating, director, tags, image, cover, title, about, description) VALUES ('0e33c7f6-27a7-4aa0-8e61-65d7e5effecf', 2.9, 'Итан Райт', 'Документальный', '/bg1s.jpg', '/bg1c.jpg', 'Архитекторы общества', 'Документальный фильм, исследующий влияние искусственного интеллекта на общество и этические, философские и социальные последствия технологии.', 'Документальный фильм Итана Райта исследует влияние технологий на современное общество, уделяя особое внимание роли искусственного интеллекта в формировании нашего будущего. Фильм исследует этические, философские и социальные последствия гонки технологий ИИ и поднимает вопрос: какой мир мы создаём для будущих поколений.');
 
+
 --
--- TOC entry 3727 (class 0 OID 24602)
+-- TOC entry 3706 (class 0 OID 24752)
 -- Dependencies: 217
--- Data for Name: schedules; Type: TABLE DATA; Schema: public; Owner: admin
+-- Data for Name: schedules; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('f2e429b0-685d-41f8-a8cd-1d8cb63b99ce', '2024-06-28T10:00:53+03:00', 0, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('5beec101-acbb-4158-adc6-d855716b44a8', '2024-06-28T14:00:53+03:00', 1, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('89ee32f3-8164-40a6-b237-f4d492450250', '2024-06-28T16:00:53+03:00', 2, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('d6a4ed9b-51d6-4df2-b66e-d75175deb373', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('a8af36c3-65ee-4224-a77d-c9ebb790ba66', '2024-06-29T15:00:53+03:00', 1, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('0cf8b68c-fcf2-4c0a-97ba-45990231fa0e', '2024-06-29T17:00:53+03:00', 2, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('2519ca34-32b4-4a7f-971d-3bb585c6450b', '2024-06-30T12:00:53+03:00', 0, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
@@ -142,7 +122,6 @@ INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "fil
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('3d5f5d12-b4d8-44d3-a440-1b91616fda40', '2024-06-28T16:00:53+03:00', 2, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('7f59de0d-62b2-412f-9e0b-bf6e971c44e5', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('65f4a65e-1bc1-4677-842b-10e9b317b287', '2024-06-29T15:00:53+03:00', 1, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('b3ba6b69-050e-498c-9cdb-92711d8e4180', '2024-06-29T17:00:53+03:00', 2, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('d87ee9ab-4d84-43bb-85d6-f71aced22f73', '2024-06-30T12:00:53+03:00', 0, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('eed1469f-c95e-428a-870d-13cbfe4ac2ac', '2024-06-30T16:00:53+03:00', 1, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('68437c84-6c35-4203-bff7-021d16042a6b', '2024-06-30T18:00:53+03:00', 2, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
@@ -182,66 +161,40 @@ INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "fil
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('9d3d3914-ea59-46a0-80a2-4e320e82956a', '2024-06-30T12:00:53+03:00', 0, 5, 10, 350, '', '92b8a2a7-ab6b-4fa9-915b-d27945865e39');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('5c68663d-1a71-401c-9214-e79af571c347', '2024-06-30T16:00:53+03:00', 1, 5, 10, 350, '', '92b8a2a7-ab6b-4fa9-915b-d27945865e39');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('2644a72a-6f17-4c61-a405-9c48bb0ea682', '2024-06-30T18:00:53+03:00', 2, 5, 10, 350, '', '92b8a2a7-ab6b-4fa9-915b-d27945865e39');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('f2e429b0-685d-41f8-a8cd-1d8cb63b99ce', '2024-06-28T10:00:53+03:00', 0, 5, 10, 350, '1:1,2:1,3:1,4:1,5:1,1:2,2:2,3:2,4:2,5:2,1:3,2:3,3:3', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('b3ba6b69-050e-498c-9cdb-92711d8e4180', '2024-06-29T17:00:53+03:00', 2, 5, 10, 350, '1:1,2:1,2:2', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('d6a4ed9b-51d6-4df2-b66e-d75175deb373', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '1:1,5:1,4:2,3:3,2:4,1:5,2:6,3:7,4:8,5:9', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
+
 
 --
--- TOC entry 3728 (class 0 OID 24615)
--- Dependencies: 218
--- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: admin
---
-
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('cd44a12b-760c-4179-8b1c-827df99e01e4', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf', 'd6a4ed9b-51d6-4df2-b66e-d75175deb373', '2024-06-29 13:00:53+05', 1, 1, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('bbdc4f55-04b0-4982-b92c-60691e4856d8', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf', 'd6a4ed9b-51d6-4df2-b66e-d75175deb373', '2024-06-29 13:00:53+05', 1, 2, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('3c205591-ab23-4596-9270-017442b363ca', '51b4bc85-646d-47fc-b988-3e7051a9fe9e', 'eed1469f-c95e-428a-870d-13cbfe4ac2ac', '2024-06-30 18:00:53+05', 5, 4, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('2e725821-2c2b-47d2-b198-9805dc0d3b9a', '51b4bc85-646d-47fc-b988-3e7051a9fe9e', 'eed1469f-c95e-428a-870d-13cbfe4ac2ac', '2024-06-30 18:00:53+05', 5, 5, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('e45686be-f95a-4057-beb9-372146d02581', '5b70cb1a-61c9-47b1-b207-31f9e89087ff', '208ec902-8955-4a52-bdc3-a6ff04602ed9', '2024-06-30 20:00:53+05', 3, 5, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('4b8d96cb-d594-42ff-abd4-bd3b78cd1d8f', '5b70cb1a-61c9-47b1-b207-31f9e89087ff', '208ec902-8955-4a52-bdc3-a6ff04602ed9', '2024-06-30 20:00:53+05', 3, 6, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('2024d006-d3c4-4df3-8ed0-d973a708d86d', '3bedbc5a-844b-40eb-9d77-83b104e0cf75', 'c06b2048-a159-4356-b51b-3d7817766d02', '2024-06-29 19:00:53+05', 3, 10, 350.00, NULL);
-INSERT INTO public.ticket (id, film, session, daytime, "row", seat, price, session_id) VALUES ('c70cd09c-f33a-4926-9225-e582089561b7', '3bedbc5a-844b-40eb-9d77-83b104e0cf75', 'c06b2048-a159-4356-b51b-3d7817766d02', '2024-06-29 19:00:53+05', 2, 10, 350.00, NULL);
-
---
--- TOC entry 3571 (class 2606 OID 24601)
--- Name: films PK_697487ada088902377482c970d1; Type: CONSTRAINT; Schema: public; Owner: admin
+-- TOC entry 3558 (class 2606 OID 24751)
+-- Name: films PK_697487ada088902377482c970d1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.films
     ADD CONSTRAINT "PK_697487ada088902377482c970d1" PRIMARY KEY (id);
 
+
 --
--- TOC entry 3573 (class 2606 OID 24609)
--- Name: schedules PK_7e33fc2ea755a5765e3564e66dd; Type: CONSTRAINT; Schema: public; Owner: admin
+-- TOC entry 3560 (class 2606 OID 24759)
+-- Name: schedules PK_7e33fc2ea755a5765e3564e66dd; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.schedules
     ADD CONSTRAINT "PK_7e33fc2ea755a5765e3564e66dd" PRIMARY KEY (id);
 
---
--- TOC entry 3575 (class 2606 OID 24622)
--- Name: ticket PK_d9a0835407701eb86f874474b7c; Type: CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public.ticket
-    ADD CONSTRAINT "PK_d9a0835407701eb86f874474b7c" PRIMARY KEY (id);
 
 --
--- TOC entry 3581 (class 2606 OID 24637)
--- Name: ticket FK_19c44759d3577031d6f114d5279; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public.ticket
-    ADD CONSTRAINT "FK_19c44759d3577031d6f114d5279" FOREIGN KEY (session_id) REFERENCES public.schedule(id);
-
---
--- TOC entry 3580 (class 2606 OID 24610)
--- Name: schedules FK_1c2f5e637713a429f4854024a76; Type: FK CONSTRAINT; Schema: public; Owner: admin
+-- TOC entry 3561 (class 2606 OID 24760)
+-- Name: schedules FK_1c2f5e637713a429f4854024a76; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.schedules
     ADD CONSTRAINT "FK_1c2f5e637713a429f4854024a76" FOREIGN KEY ("filmId") REFERENCES public.films(id);
 
 
--- Completed on 2025-06-17 18:17:35 +05
+-- Completed on 2025-07-06 12:42:19 +05
 
 --
 -- PostgreSQL database dump complete
 --
-

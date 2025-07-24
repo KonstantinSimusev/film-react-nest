@@ -7,9 +7,9 @@ import { OrderService } from './order.service';
 
 const fakeRepository = {
   films: {
-    getAllFilms: jest.fn().mockResolvedValue(filmFixtures.films),
-    getFilmSchedule: jest.fn().mockResolvedValue(filmFixtures.film),
-    save: jest.fn().mockResolvedValue(filmFixtures.film.id),
+    findAll: jest.fn().mockResolvedValue(filmFixtures.films),
+    findSchedule: jest.fn().mockResolvedValue(filmFixtures.film),
+    updateTaken: jest.fn().mockResolvedValue(filmFixtures.film.id),
   },
 };
 
@@ -22,9 +22,7 @@ describe('OrderController', () => {
       providers: [FilmsService, OrderService],
     })
       .useMocker((token) => {
-        if (token === 'REPOSITORY') {
-          return fakeRepository;
-        }
+        return fakeRepository;
       })
       .compile();
 

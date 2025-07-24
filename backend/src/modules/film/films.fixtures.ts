@@ -1,4 +1,4 @@
-import { IFilm } from '../../shared/interfaces/entities/films.entity';
+import { IFilm } from '../../shared/interfaces/api.interface';
 
 const film: IFilm = {
   id: '92b8a2a7-ab6b-4fa9-915b-d27945865e39',

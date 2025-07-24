@@ -1,11 +1,11 @@
 import { Controller, Post, Body } from '@nestjs/common';
 
-import { ITicket } from '../../shared/interfaces/entities/ticket.entity';
+import { ITicket } from '../../shared/interfaces/api.interface';
 import { CreateOrderDTO } from './dto/create-order.dto';
 
 import { OrderService } from './order.service';
 
-import { ApiListResponse } from '../../shared/interfaces/api/api-list-response.interface';
+import { ApiListResponse } from '../../shared/interfaces/api.interface';
 
 @Controller('order')
 export class OrderController {
@@ -13,8 +13,13 @@ export class OrderController {
 
   @Post()
   async createOrder(
-    @Body() createOrderData: CreateOrderDTO,
+    @Body() order: CreateOrderDTO,
   ): Promise<ApiListResponse<ITicket>> {
-    return this.orderService.createOrder(createOrderData);
+    const tickets = await this.orderService.createOrder(order);
+
+    return {
+      total: tickets.length,
+      items: tickets,
+    };
   }
 }

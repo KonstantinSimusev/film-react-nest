@@ -12,16 +12,15 @@ jobs:
     permissions:
       packages: write
       contents: write
-
     steps:
-      - name: Set lower case owner name
+      - name: set lower case owner name
         run: |
-          echo "REPO=${OWNER,,}," >> ${GITHUB_ENV}
+          echo "REPO=${OWNER,,}" >> ${GITHUB_ENV}
         env:
           OWNER: ${{ github.repository_owner }}
-
+      
       - run: |
-          echo "repo $REPO"
+          echo "repo ${REPO}"
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,7 +31,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Docker Hub
+      - name: Login to GitHub Packages
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -42,21 +41,21 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v6
         with:
-          context: '{{defaultContext}}:backend'
+          context: './backend'
           push: true
-          tags: 'ghcr.io/konstantinsimusev/film-react-nest_backend:latest'
+          tags: ghcr.io/${{ github.repository_owner }}/backend:latest
 
       - name: Build and push frontend
         uses: docker/build-push-action@v6
         with:
-          context: '{{defaultContext}}:frontend'
+          context: './frontend'
           push: true
-          tags: 'ghcr.io/konstantinsimusev/film-react-nest_frontend:latest'
+          tags: ghcr.io/${{ github.repository_owner }}/frontend:latest
 
-      - name: Build and push server
+      - name: Build and push nginx
         uses: docker/build-push-action@v6
         with:
-          context: '{{defaultContext}}:nginx'
+          context: './nginx'
           push: true
-          tags: 'ghcr.io/konstantinsimusev/film-react-nest_server:latest'
-      
+          tags: ghcr.io/${{ github.repository_owner }}/nginx:latest
+          
