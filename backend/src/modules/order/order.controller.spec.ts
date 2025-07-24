@@ -21,7 +21,7 @@ describe('OrderController', () => {
       controllers: [OrderController],
       providers: [FilmsService, OrderService],
     })
-      .useMocker((token) => {
+      .useMocker(() => {
         return fakeRepository;
       })
       .compile();
