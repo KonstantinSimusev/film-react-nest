@@ -46,18 +46,18 @@ jobs:
         with:
           context: './backend'
           push: true
-          tags: ghcr.io/${{ env.REPO }}/backend:latest
+          tags: ghcr.io/${{ env.REPO }}/film-backend:v1.0.0
 
       - name: Build and push frontend
         uses: docker/build-push-action@v6
         with:
           context: './frontend'
           push: true
-          tags: ghcr.io/${{ env.REPO }}/frontend:latest
+          tags: ghcr.io/${{ env.REPO }}/film-frontend:v1.0.0
 
       - name: Build and push nginx
         uses: docker/build-push-action@v6
         with:
           context: './nginx'
           push: true
-          tags: ghcr.io/${{ env.REPO }}/nginx:latest
+          tags: ghcr.io/${{ env.REPO }}/film-nginx:v1.0.0

@@ -1,7 +1,8 @@
 services:
   database:
     image: postgres:latest
-    container_name: database
+    container_name: film-database
+    restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -9,7 +10,6 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
-    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
@@ -22,9 +22,13 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend
-    env_file:
-      - backend/.env
+    image: 'ghcr.io/${OWNER}/film-backend:v1.0.0'
+    container_name: film-backend
+    restart: always
+    environment:
+      DB_ADDRESS: ${DB_ADDRESS}
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_CDN_URL: ${VITE_CDN_URL}
     ports:
       - 3001:3000
     networks:
@@ -36,7 +40,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: frontend
+    image: 'ghcr.io/${OWNER}/film-frontend:v1.0.0'
+    container_name: film-frontend
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_CDN_URL: ${VITE_CDN_URL}
     volumes:
       - frontend_dist:/app/dist
     networks:
@@ -46,16 +54,20 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    container_name: nginx
-    ports:
-      - 80:80
-    networks:
-      - frontend-network
-      - backend-network
+    image: 'ghcr.io/${OWNER}/film-nginx:v1.0.0'
+    container_name: film-nginx
     restart: always
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_CDN_URL: ${VITE_CDN_URL}
     volumes:
       - frontend_dist:/var/www
       - ./backend/public:/var/www/backend
+    ports:
+      - 81:80
+    networks:
+      - frontend-network
+      - backend-network
 
 volumes:
   postgres_data:
@@ -66,10 +78,11 @@ networks:
   frontend-network:
 
 
+
 # services:
-#   mongo:
+#   database:
 #     image: mongo:latest
-#     container_name: mongo
+#     container_name: database
 #     environment:
 #       MONGO_INITDB_ROOT_USERNAME: root
 #       MONGO_INITDB_ROOT_PASSWORD: rootpassword
@@ -82,7 +95,7 @@ networks:
 #     ports:
 #       - 27017:27017
 #     networks:
-#       - mongo-network
+#       - backend-network
 
 #   backend:
 #     build:
@@ -95,9 +108,8 @@ networks:
 #       - 3001:3000
 #     networks:
 #       - backend-network
-#       - mongo-network
 #     depends_on:
-#       - mongo
+#       - database
 
 #   frontend:
 #     build:
@@ -129,94 +141,4 @@ networks:
 
 # networks:
 #   backend-network:
-#   mongo-network:
 #   frontend-network:
-
-
-
-# services:
-#   database:
-#     image: postgres:16.4
-#     environment:
-#       POSTGRES_USER: ${POSTGRES_USER}
-#       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#       POSTGRES_DB: ${POSTGRES_DB}
-#       DB_USER: ${DB_USER}
-#       DB_PASSWORD: ${DB_PASSWORD}
-#       DB_NAME: ${DB_NAME}
-#     volumes:
-#       - db_data:/var/lib/postgresql/data
-#       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-#     ports:
-#       - '5432:5432'
-#     networks:
-#       - internal
-
-#   pgadmin:
-#     image: dpage/pgadmin4
-#     container_name: pgadmin4_container
-#     restart: always
-#     ports:
-#       - '5050:80'
-#     environment:
-#       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-#       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-#     volumes:
-#       - pgadmin-data:/var/lib/pgadmin
-#     networks:
-#       - internal
-
-#   frontend:
-#     image: 'ghcr.io/${OWNER}/film-react-nest_frontend:latest'
-#     build:
-#       context: frontend
-#     environment:
-#       VITE_BASE_URL: /
-#       VITE_API_URL: ${VITE_API_URL}
-#       VITE_CDN_URL: ${VITE_CDN_URL}
-#     volumes:
-#       - frontend_build:/app/dist
-#     networks:
-#       - internal
-
-#   backend:
-#     image: 'ghcr.io/${OWNER}/film-react-nest_backend:latest'
-#     build:
-#       context: backend
-#     environment:
-#       PORT: ${PORT}
-#       DEBUG: ${DEBUG}
-#       DB_DRIVER: ${DB_DRIVER}
-#       DB_HOST: ${DB_HOST}
-#       DB_PORT: ${DB_PORT}
-#       DB_USER: ${DB_USER}
-#       DB_PASSWORD: ${DB_PASSWORD}
-#       DB_NAME: ${DB_NAME}
-#     ports:
-#       - 3000:3000
-#     networks:
-#       - internal
-#     depends_on:
-#       - database
-
-#   server:
-#     image: 'ghcr.io/${OWNER}/film-react-nest_server:latest'
-#     build:
-#       context: nginx
-#     ports:
-#       - 80:80
-#     volumes:
-#       - frontend_build:/var/www
-#     depends_on:
-#       - frontend
-#       - backend
-#     networks:
-#       - internal
-
-# volumes:
-#   db_data:
-#   pgadmin-data:
-#   frontend_build:
-
-# networks:
-#   internal:
