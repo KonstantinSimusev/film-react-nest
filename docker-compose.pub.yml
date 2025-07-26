@@ -23,11 +23,12 @@ services:
     container_name: film-backend
     restart: always
     environment:
+      PORT: 3000
       DB_ADDRESS: ${DB_ADDRESS}
-      VITE_API_URL: ${VITE_API_URL}
-      VITE_CDN_URL: ${VITE_CDN_URL}
+    volumes:
+      - backend_dist:/app/dist
     ports:
-      - 3001:3000
+      - 3000:3000
     networks:
       - backend-network
     depends_on:
@@ -53,15 +54,16 @@ services:
       VITE_CDN_URL: ${VITE_CDN_URL}
     volumes:
       - frontend_dist:/var/www
-      - ./backend/public:/var/www/backend
+      - backend_dist:/var/www/backend
     ports:
-      - 81:80
+      - 80:80
     networks:
       - frontend-network
       - backend-network
 
 volumes:
   postgres_data:
+  backend_dist:
   frontend_dist:
 
 networks:

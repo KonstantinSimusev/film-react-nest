@@ -1,8 +1,4 @@
-# Используйте официальный образ Nginx
 FROM nginx:latest
-
-# Копируем наш конфиг
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Запускаем Nginx
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

@@ -16,6 +16,9 @@ import { OrderModule } from './modules/order/order.module';
     DatabaseModule,
     ServeStaticModule.forRoot({
       rootPath: path.join(process.cwd(), 'public'),
+      serveStaticOptions: {
+        index: false, // это важно! отключает поиск index.html
+      },
     }),
     FilmsModule,
     OrderModule,

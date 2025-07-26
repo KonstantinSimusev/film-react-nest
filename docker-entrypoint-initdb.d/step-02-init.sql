@@ -134,10 +134,10 @@ INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "fil
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('ee489a8b-68be-48a1-b62f-896981d60b06', '2024-06-30T12:00:53+03:00', 0, 5, 10, 350, '', '3bedbc5a-844b-40eb-9d77-83b104e0cf75');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('a33f5fda-c4d8-4a1b-9f86-cd39d73fdc98', '2024-06-30T16:00:53+03:00', 1, 5, 10, 350, '', '3bedbc5a-844b-40eb-9d77-83b104e0cf75');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('24074084-1d42-49ff-b0fb-e64029674718', '2024-06-30T18:00:53+03:00', 2, 5, 10, 350, '', '3bedbc5a-844b-40eb-9d77-83b104e0cf75');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('793009d6-030c-4dd4-8d13-9ba500724b38', '2024-06-28T10:00:53+03:00', 0, 5, 10, 350, '3:3,1:4,1:5,1:3,1:2', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('793009d6-030c-4dd4-8d13-9ba500724b38', '2024-06-28T10:00:53+03:00', 0, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('27a6c145-d5bf-4722-8bd9-b58c5b6b718f', '2024-06-28T14:00:53+03:00', 1, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('1f57131e-eb9c-41a2-b451-89ea7f691fb7', '2024-06-28T16:00:53+03:00', 2, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('bfd27e0e-3a21-465c-966c-c874da242875', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '2:2,2:3', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('bfd27e0e-3a21-465c-966c-c874da242875', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('4ba7c6c6-33ba-4f1f-9a64-538d59d90c10', '2024-06-29T15:00:53+03:00', 1, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('e75cded8-ebad-4286-9e3e-b3e852916f8c', '2024-06-29T17:00:53+03:00', 2, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('516f87d0-8a36-4663-a079-1e9695b9a412', '2024-06-30T12:00:53+03:00', 0, 5, 10, 350, '', '5b70cb1a-61c9-47b1-b207-31f9e89087ff');
@@ -161,9 +161,9 @@ INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "fil
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('9d3d3914-ea59-46a0-80a2-4e320e82956a', '2024-06-30T12:00:53+03:00', 0, 5, 10, 350, '', '92b8a2a7-ab6b-4fa9-915b-d27945865e39');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('5c68663d-1a71-401c-9214-e79af571c347', '2024-06-30T16:00:53+03:00', 1, 5, 10, 350, '', '92b8a2a7-ab6b-4fa9-915b-d27945865e39');
 INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('2644a72a-6f17-4c61-a405-9c48bb0ea682', '2024-06-30T18:00:53+03:00', 2, 5, 10, 350, '', '92b8a2a7-ab6b-4fa9-915b-d27945865e39');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('f2e429b0-685d-41f8-a8cd-1d8cb63b99ce', '2024-06-28T10:00:53+03:00', 0, 5, 10, 350, '1:1,2:1,3:1,4:1,5:1,1:2,2:2,3:2,4:2,5:2,1:3,2:3,3:3', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('b3ba6b69-050e-498c-9cdb-92711d8e4180', '2024-06-29T17:00:53+03:00', 2, 5, 10, 350, '1:1,2:1,2:2', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
-INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('d6a4ed9b-51d6-4df2-b66e-d75175deb373', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '1:1,5:1,4:2,3:3,2:4,1:5,2:6,3:7,4:8,5:9', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('f2e429b0-685d-41f8-a8cd-1d8cb63b99ce', '2024-06-28T10:00:53+03:00', 0, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('b3ba6b69-050e-498c-9cdb-92711d8e4180', '2024-06-29T17:00:53+03:00', 2, 5, 10, 350, '', '51b4bc85-646d-47fc-b988-3e7051a9fe9e');
+INSERT INTO public.schedules (id, daytime, hall, rows, seats, price, taken, "filmId") VALUES ('d6a4ed9b-51d6-4df2-b66e-d75175deb373', '2024-06-29T11:00:53+03:00', 0, 5, 10, 350, '', '0e33c7f6-27a7-4aa0-8e61-65d7e5effecf');
 
 
 --
