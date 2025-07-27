@@ -1,3 +1,4 @@
+@use 'sass:color'; // Добавляем импорт для новых цветовых функций
 @use 'variables' as *;
 @use 'mixins';
 
@@ -32,8 +33,49 @@
       outline-color: $error;
     }
 
+    // Меняем lighten на color.adjust
     &::placeholder {
-      color: lighten($primaryLight, 23%);
+      color: color.adjust($primaryLight, $lightness: 23%);
     }
   }
 }
+
+// @use 'variables' as *;
+// @use 'mixins';
+
+// .form {
+//   @include mixins.flex(column);
+//   gap: 1.5rem;
+//   background: $primaryLight;
+//   padding: $defaultPadding;
+//   border-radius: 3rem;
+
+//   .label {
+//     flex-grow: 1;
+//   }
+
+//   .input {
+//     background: $primary;
+//     color: white;
+//     border: 1px solid transparent;
+//     border-radius: 1.5rem;
+//     padding: 1rem;
+//     font-size: 1.4rem;
+//     width: 100%;
+//     box-sizing: border-box;
+//     outline-color: $secondary;
+
+//     &:focus {
+//       outline-style: solid;
+//     }
+
+//     &:invalid {
+//       border-color: $error;
+//       outline-color: $error;
+//     }
+
+//     &::placeholder {
+//       color: lighten($primaryLight, 23%);
+//     }
+//   }
+// }

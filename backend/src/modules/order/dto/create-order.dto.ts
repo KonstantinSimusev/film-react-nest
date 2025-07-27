@@ -13,8 +13,6 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { Schedule } from '../../film/entities/schedule.entity';
-
 // Создаем общий объект с опциями валидации для сообщений
 const commonOptions: ValidationOptions = {
   message: 'Поле обязательно для заполнения',
@@ -48,10 +46,6 @@ export class TicketDTO {
   @IsNumber({}, { message: 'Цена должна быть числом' })
   @IsPositive({ message: 'Цена должна быть положительным числом' })
   price: number;
-
-  @ValidateNested()
-  @Type(() => Schedule)
-  schedule: Schedule;
 }
 
 export class CreateOrderDTO {

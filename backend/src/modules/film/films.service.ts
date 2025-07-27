@@ -1,32 +1,26 @@
 import { Injectable } from '@nestjs/common';
 
-import { IFilm } from '../../shared/interfaces/entities/films.entity';
-import { ISсhedule } from '../../shared/interfaces/entities/sсhedule.entity';
+import { IFilm } from '../../shared/interfaces/api.interface';
 
 import { FilmRepository } from './films.repository';
-
-import { ApiListResponse } from '../../shared/interfaces/api/api-list-response.interface';
 
 @Injectable()
 export class FilmsService {
   constructor(private readonly filmRepository: FilmRepository) {}
 
-  async getFilmsWithTotal(): Promise<ApiListResponse<IFilm>> {
-    const items = await this.filmRepository.getAllFilms();
-
-    return {
-      total: items.length,
-      items,
-    };
+  async findAll(): Promise<IFilm[]> {
+    return this.filmRepository.findAll();
   }
 
-  async getSchedulesWithTotal(id: string): Promise<ApiListResponse<ISсhedule>> {
-    const film = await this.filmRepository.getFilmById(id);
-    const items = film.schedule;
+  async findById(id: string): Promise<IFilm> {
+    return this.filmRepository.findById(id);
+  }
 
-    return {
-      total: items.length,
-      items,
-    };
+  async updateTaken(
+    filmId: string,
+    sessionId: string,
+    newTaken: string[],
+  ): Promise<string> {
+    return this.filmRepository.updateTaken(filmId, sessionId, newTaken);
   }
 }

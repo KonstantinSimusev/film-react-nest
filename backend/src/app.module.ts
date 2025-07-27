@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 
-import { DatabaseModule } from './database/postgresql.module';
+import { DatabaseModule } from './database/database.module';
 import { FilmsModule } from './modules/film/films.module';
 import { OrderModule } from './modules/order/order.module';
 
@@ -12,13 +12,14 @@ import { OrderModule } from './modules/order/order.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      cache: true,
-      envFilePath: '.env',
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '../../public'),
     }),
     DatabaseModule,
+    ServeStaticModule.forRoot({
+      rootPath: path.join(process.cwd(), 'public'),
+      serveStaticOptions: {
+        index: false, // это важно! отключает поиск index.html
+      },
+    }),
     FilmsModule,
     OrderModule,
   ],

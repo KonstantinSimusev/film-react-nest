@@ -1,13 +1,14 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm';
 import { Film } from './film.entity';
-import { Ticket } from '../../order/entities/ticket.entity';
 
-@Entity()
+@Entity({
+  name: 'schedules',
+})
 export class Schedule {
   @PrimaryColumn({ type: 'uuid', nullable: false })
   id: string;
 
-  @Column({ type: 'timestamp with time zone', nullable: false })
+  @Column({ nullable: false })
   daytime: string;
 
   @Column({ type: 'integer', nullable: false })
@@ -22,13 +23,37 @@ export class Schedule {
   @Column({ type: 'integer', nullable: false })
   price: number;
 
-  @Column({ type: 'jsonb', nullable: false })
+  @Column('simple-array', { nullable: false })
   taken: string[];
 
   @ManyToOne(() => Film, (film) => film.schedule)
-  @JoinColumn({ name: 'film_id' })
   film: Film;
-
-  @OneToMany(() => Ticket, (ticket) => ticket.schedule)
-  tickets: Ticket[];
 }
+
+// import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
+// @Schema()
+// export class Schedule {
+//   @Prop({ required: true })
+//   id: string;
+
+//   @Prop({ required: true })
+//   daytime: string;
+
+//   @Prop({ required: true })
+//   hall: number;
+
+//   @Prop({ required: true })
+//   rows: number;
+
+//   @Prop({ required: true })
+//   seats: number;
+
+//   @Prop({ required: true })
+//   price: number;
+
+//   @Prop({ required: true })
+//   taken: string[];
+// }
+
+// export const ScheduleSchema = SchemaFactory.createForClass(Schedule);

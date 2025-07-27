@@ -1,68 +1,50 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { ITicket } from '../../shared/interfaces/entities/ticket.entity';
+import { IFilm, ITicket } from '../../shared/interfaces/api.interface';
 import { CreateOrderDTO } from './dto/create-order.dto';
 
-import { OrderRepository } from './order.repository';
-
-import { ApiListResponse } from '../../shared/interfaces/api/api-list-response.interface';
-import { Ticket } from './entities/ticket.entity';
+import { FilmsService } from '../film/films.service';
 
 @Injectable()
 export class OrderService {
-  constructor(private orderRepository: OrderRepository) {}
+  constructor(private readonly filmsService: FilmsService) {}
 
-  async createOrder(
-    createOrderDTO: CreateOrderDTO,
-  ): Promise<ApiListResponse<ITicket>> {
-    const { tickets } = createOrderDTO;
-    const items: ITicket[] = [];
-    const busyAllSeats = new Set<string>(); // Создаем set для хранения занятых мест
-    const currentBusySeats: string[] = []; // Массив для хранения всех занятых мест
-
-    // Получаем все существующие заказы для проверки занятых мест
-    const createdOrders = await this.orderRepository.getAllOrders();
-    createdOrders.forEach((order) => {
-      busyAllSeats.add(`${order.row}:${order.seat}`);
-    });
+  async createOrder(order: CreateOrderDTO): Promise<ITicket[]> {
+    const { tickets } = order;
+    let film: IFilm | null = null;
+    const sessionUpdates = new Map<string, string[]>();
 
     for (const ticket of tickets) {
-      // Получаем место из текущего билета
-      const currentSeat = `${ticket.row}:${ticket.seat}`;
+      film = await this.filmsService.findById(ticket.film);
 
-      // Проверяем занятость места
-      if (busyAllSeats.has(currentSeat)) {
-        currentBusySeats.push(currentSeat);
-      } else {
-        // Создаем новый объект Ticket из DTO
-        const newTicket = new Ticket();
-        newTicket.film = ticket.film;
-        newTicket.session = ticket.session;
-        newTicket.daytime = ticket.daytime;
-        newTicket.row = ticket.row;
-        newTicket.seat = ticket.seat;
-        newTicket.price = ticket.price;
-        newTicket.schedule = ticket.schedule;
-
-        // Если место свободно, создаем заказ
-        const newOrder = await this.orderRepository.createOrder(newTicket);
-        items.push(newOrder);
-        
-        // Добавляем занятое место в set
-        busyAllSeats.add(currentSeat);
+      if (!film) {
+        throw new Error('Фильм не найден');
       }
+
+      const session = film.schedule.find((s) => s.id === ticket.session);
+
+      if (!session) {
+        throw new Error('Сеанс не найден');
+      }
+
+      const seatKey = `${ticket.row}:${ticket.seat}`;
+
+      if (session.taken.includes(seatKey)) {
+        throw new Error('Место уже занято');
+      }
+
+      // Собираем все изменения для одного сеанса
+      if (!sessionUpdates.has(ticket.session)) {
+        sessionUpdates.set(ticket.session, [...session.taken]);
+      }
+      sessionUpdates.get(ticket.session)!.push(seatKey);
     }
 
-    // Если есть занятые места, выбрасываем исключение со списком всех занятых мест
-    if (currentBusySeats.length > 0) {
-      throw new ConflictException(
-        `Следующие места уже заняты: ${currentBusySeats.join(', ')}`,
-      );
+    // Применяем все обновления
+    for (const [sessionId, taken] of sessionUpdates.entries()) {
+      await this.filmsService.updateTaken(film.id, sessionId, taken);
     }
 
-    return {
-      total: items.length,
-      items,
-    };
+    return tickets;
   }
 }
