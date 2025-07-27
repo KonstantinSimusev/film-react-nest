@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     headers: {
-      "Access-Control-Allow-Origin": "films.nomorepartiessbs.ru, http://localhost:3000",
+      "Access-Control-Allow-Origin": "global-pack-studio.ru, http://localhost:3000",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     },

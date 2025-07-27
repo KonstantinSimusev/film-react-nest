@@ -13,7 +13,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api/afisha');
   app.enableCors();
-  app.useLogger(new TskvLogger());
+  // app.useLogger(new TskvLogger());
   await app.listen(port);
 }
 bootstrap();
