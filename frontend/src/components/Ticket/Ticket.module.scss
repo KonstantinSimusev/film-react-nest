@@ -7,7 +7,7 @@
   gap: $defaultPadding;
   background: $primaryLight;
   padding: $defaultPadding;
-  border-radius: 3rem;
+  border-radius: 2rem;
 
   .info {
     flex-grow: 1;
@@ -17,7 +17,7 @@
   .price {
     display: block;
     margin-bottom: 1rem;
-    font-size: 2.4rem;
+    font-size: 1.2rem;
   }
 
   .place::before {

@@ -10,7 +10,7 @@
   background-color: $overlayBackground;
   z-index: 100;
   padding-top: 5vh;
-  padding-bottom: 5vh;
+  padding-bottom: 5px;
 
   .container {
     @include mixins.container;
@@ -18,7 +18,7 @@
     gap: $defaultPadding;
     background-color: $primary;
     min-height: 90vmin;
-    border-radius: 3rem;
+    border-radius: 2rem;
     box-sizing: border-box;
     position: relative;
   }
