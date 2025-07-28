@@ -8,17 +8,17 @@ $error: #f18b7e;
 $font: 'YS Text', Roboto, Helvetica, Arial, sans-serif;
 $titleFont: 'Garamond', sans-serif;
 $fontMono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-$baseFontSize: 20px;
+$baseFontSize: clamp(0.875rem, 0.7231rem + 0.7595vw, 1.25rem);
 $baseFontColor: white;
 
-$mainFontSize: 1.4em;
-$titleFontSize: 6em;
+$mainFontSize: clamp(1.125rem, 1.0744rem + 0.2532vw, 1.25rem);
+$titleFontSize: clamp(2.5rem, 1.7405rem + 3.7975vw, 4.375rem);
 $headerElementsSize: 2rem;
 $headerHeight: 5.5rem;
 
 $maxPageWidth: 1110px;
 $minPageWidth: 320px;
-$defaultPadding: 2.5rem;
+$defaultPadding: 2rem;
 
 $defaultBorder: 1px solid gray;
 $overlayBackground: rgba(0, 0, 0, 0.8);

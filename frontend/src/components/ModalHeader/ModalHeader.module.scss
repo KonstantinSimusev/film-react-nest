@@ -27,9 +27,9 @@
 
   .title {
     font-family: $titleFont;
-    font-size: 4em;
+    font-size: clamp(2.5rem, 0.981rem + 7.5949vw, 6.25rem);
     line-height: 93%;
-    margin: 0.2em 0;
+    margin: 0.5em 0;
   }
 
   .description {

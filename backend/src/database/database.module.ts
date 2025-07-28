@@ -19,6 +19,8 @@ import { Schedule } from '../modules/film/entities/schedule.entity';
           url: dbUrl,
           entities: [Film, Schedule],
           synchronize: false,
+          retryAttempts: 5,    // Количество попыток переподключения
+          retryDelay: 1000,    // Задержка между попытками в миллисекундах
         };
       },
     }),

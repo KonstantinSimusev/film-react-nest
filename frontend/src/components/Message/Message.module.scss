@@ -15,7 +15,7 @@
 
     .title {
       font-family: $titleFont;
-      font-size: 4em;
+      font-size: $titleFontSize;
       line-height: 93%;
       margin: 0.2em 0;
     }
@@ -31,8 +31,8 @@
   }
 
   .image {
-    width: 12rem;
-    height: 12rem;
+    width: 5rem;
+    height: 5rem;
   }
 
   .close {
